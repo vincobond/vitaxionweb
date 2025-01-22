@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ViTaxion</title>
+    <link rel="stylesheet" href="../public/output.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" href="../public/images/vitaxion logo.png" type="../public/images/vitaxion logo.png" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .platform-icon {
+            animation: float 3s ease-in-out infinite;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .platform-icon.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease-out;
+        }
+
+        .loading-bar {
+            height: 4px;
+            background: linear-gradient(to right, #8B5CF6, #6D28D9);
+            transform-origin: left;
+            animation: loading 2s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: scaleX(0);
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0);
+            }
+        }
+
+        /* Active link indicator */
+        .nav-active {
+            @apply bg-white/10;
+        }
+
+        /* Smooth transition for mobile menu */
+        #mobile-menu {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Adjust main content padding */
+        main {
+            padding-top: 3.5rem;
+        }
+
+        /* Mobile bottom navigation active state */
+        .mobile-nav-active {
+            @apply text-purple-500;
+        }
+
+        .mobile-nav-active::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: theme('colors.purple.500');
+            border-radius: 50%;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        /* Adjust main content padding for mobile */
+        @media (max-width: 768px) {
+            main {
+                padding-bottom: 6rem;
+            }
+        }
+
+        /* Add smooth slide-up animation for mobile menu */
+        .mobile-menu-enter {
+            transform: translateY(100%);
+        }
+
+        .mobile-menu-enter-active {
+            transform: translateY(0);
+            transition: transform 0.3s ease-out;
+        }
+
+        .mobile-menu-exit {
+            transform: translateY(0);
+        }
+
+        .mobile-menu-exit-active {
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in;
+        }
+
+        /* Add glass effect to bottom nav */
+        .backdrop-blur-md {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Add subtle shadow to bottom nav */
+        .shadow-lg {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1),
+                0 0 40px rgba(139, 92, 246, 0.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .ads-box1, .ads-box2 {
+            position: fixed;
+            z-index: 50;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .ads-box1:hover, .ads-box2:hover {
+            transform: scale(1.02);
+        }
+
+        /* Custom scrollbar for the ads boxes */
+        .ads-box1::-webkit-scrollbar,
+        .ads-box2::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .ads-box1::-webkit-scrollbar-track,
+        .ads-box2::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .ads-box1::-webkit-scrollbar-thumb,
+        .ads-box2::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .ads-box1::-webkit-scrollbar-thumb:hover,
+        .ads-box2::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+
+    <!-- <link rel="stylesheet" href="in"> -->
+    <!-- Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -->
+</head>
+
+<body class="bg-gradient-to-br from-indigo-900 to-purple-800 to-yellow-900 min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+        <div class="header">
+            <div class="logo home_logo flex items-center bg-white/10 rounded w-auto h-8 ">
+                <!-- Icon ====== -->
+                <div
+                    class="icon flex items-center bg-white/10 border-l border-b border-t border-blue-300   rounded w-auto h-8 hover:scale-150 transition-transform duration-400 cursor-pointer ">
+                    <span class="pl-4">
+                        <!-- Video Icon======= -->
+                        <svg class="w-6 fill-deepChocolate " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path
+                                d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z" />
+                        </svg>
+                    </span>
+
+                    <!-- Arrow Icon======= -->
+                    <span>
+                        <svg class="w-5 pl-2 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path
+                                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                        </svg>
+                    </span>
+
+                    <!--Audio Icon======= -->
+                    <span class="pl-2 pr-2">
+                        <svg class="w-4 fill-deepChocolate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path
+                                d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z" />
+                        </svg>
+                    </span>
+                </div>
+                <!-- Logo Name -->
+                <a class="pl-2 pr-2 text-white font-semibold text-2xl hover:scale-150 transition-transform duration-400"
+                    href="#">
+                    <!-- <img class="" src="../img/transparent vitaxion logo.png" alt=""> -->
+                    ViTaxion</a>
+
+            </div>
+
+            <div class="flex">
+                <nav class="hidden md:flex">
+                    <ul class="flex justify-between text-white">
+                        <li
+                            class="bg-gradient-to-br from-deepChocolate to-purple-800 backdrop-blur-md border cursor-pointer border-white/20 rounded-2xl shadow-lg p-2 m-1 mt-4 hover:bg-white/10 hover:scale-150 transition-transform duration-400">
+                            <div class="relative">
+                                <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path
+                                        d="M288 350.1l0 1.9-32 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L447.3 128.1c-12.3-1-25 3-34.8 11.7c-35.4 31.6-65.6 67.7-87.3 102.8C304.3 276.5 288 314.9 288 350.1zM480 512c-88.4 0-160-71.6-160-160c0-76.7 62.5-144.7 107.2-179.4c5-3.9 10.9-5.8 16.8-5.8c7.9-.1 16 3.1 22 9.2l46 46 11.3-11.3c11.7-11.7 30.6-12.7 42.3-1C624.5 268 640 320.2 640 352c0 88.4-71.6 160-160 160zm64-111.8c0-36.5-37-73-54.8-88.4c-5.4-4.7-13.1-4.7-18.5 0C453 327.1 416 363.6 416 400.2c0 35.3 28.7 64 64 64s64-28.7 64-64z" />
+                                </svg>
+
+                                <div
+                                    class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                                </div>
+                            </div>
+
+                            <a class="pr-4 items-center pl-1.5" href="#home">Home</a>
+                        </li>
+                        <li
+                            class="bg-white/10 backdrop-blur-md border cursor-pointer border-white/20 rounded-2xl shadow-lg p-2 m-1 mt-4 hover:bg-purple-500 hover:scale-150 transition-transform duration-400">
+                            <div class="relative">
+                                <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path
+                                        d="M201.1 71.9c16.9-5 26.6-22.9 21.5-39.8s-22.9-26.6-39.8-21.5c-21.5 6.4-41.8 15.5-60.6 27C114.3 34 105.4 32 96 32C60.7 32 32 60.7 32 96c0 9.4 2 18.3 5.6 26.3c-11.5 18.7-20.6 39-27 60.6c-5 16.9 4.6 34.8 21.5 39.8s34.8-4.6 39.8-21.5c4.3-14.6 10.4-28.5 17.9-41.4c2 .2 4.1 .3 6.1 .3c35.3 0 64-28.7 64-64c0-2.1-.1-4.1-.3-6.1c12.9-7.5 26.8-13.6 41.4-17.9zm128-61.3c-16.9-5-34.8 4.6-39.8 21.5s4.6 34.8 21.5 39.8c14.6 4.3 28.5 10.4 41.4 17.9c-.2 2-.3 4.1-.3 6.1c0 35.3 28.7 64 64 64c2.1 0 4.1-.1 6.2-.3c7.5 12.9 13.6 26.8 17.9 41.4c5 16.9 22.9 26.6 39.8 21.5s26.6-22.9 21.5-39.8c-6.4-21.5-15.5-41.8-27-60.6c3.6-8 5.6-16.9 5.6-26.3c0-35.3-28.7-64-64-64c-9.4 0-18.3 2-26.3 5.6c-18.7-11.5-39-20.6-60.6-27zM71.9 310.9c-5-16.9-22.9-26.6-39.8-21.5s-26.6 22.9-21.5 39.8c6.4 21.5 15.5 41.8 27 60.6C34 397.7 32 406.6 32 416c0 35.3 28.7 64 64 64c9.4 0 18.3-2 26.3-5.6c18.7 11.5 39 20.6 60.6 27c16.9 5 34.8-4.6 39.8-21.5s-4.6-34.8-21.5-39.8c-14.6-4.3-28.5-10.4-41.4-17.9c.2-2 .3-4.1 .3-6.2c0-35.3-28.7-64-64-64c-2.1 0-4.1 .1-6.2 .3c-7.5-12.9-13.6-26.8-17.9-41.4zm429.4 18.3c5-16.9-4.6-34.8-21.5-39.8s-34.8 4.6-39.8 21.5c-4.3 14.6-10.4 28.5-17.9 41.4c-2-.2-4.1-.3-6.2-.3c-35.3 0-64 28.7-64 64c0 2.1 .1 4.1 .3 6.2c-12.9 7.5-26.8 13.6-41.4 17.9c-16.9 5-26.6 22.9-21.5 39.8s22.9 26.6 39.8 21.5c21.5-6.4 41.8-15.5 60.6-27c8 3.6 16.9 5.6 26.3 5.6c35.3 0 64-28.7 64-64c0-9.4-2-18.3-5.6-26.3c11.5-18.7 20.6-39 27-60.6zM192.8 256.8c0-15.6 5.6-29.9 14.9-41.1L223 231c6.6 6.6 17.8 1.9 17.8-7.4l0-60.5c0-5.7-4.7-10.4-10.4-10.4l-60.5 0c-9.3 0-13.9 11.2-7.4 17.8l11.2 11.2c-17.9 19.8-28.9 46.2-28.9 75.1c0 43.6 24.9 81.3 61.1 99.8c11.8 6 26.3 1.4 32.3-10.4s1.4-26.3-10.4-32.3c-20.8-10.6-34.9-32.2-34.9-57zm93.1-58.6c20.8 10.6 34.9 32.2 34.9 57c0 15.6-5.6 29.9-14.9 41.1L290.6 281c-6.6-6.6-17.8-1.9-17.8 7.4l0 60.5c0 5.7 4.7 10.4 10.4 10.4l60.5 0c9.3 0 13.9-11.2 7.4-17.8l-11.2-11.2c17.9-19.8 28.9-46.2 28.9-75.1c0-43.6-24.9-81.3-61.1-99.8c-11.8-6-26.3-1.4-32.3 10.4s-1.4 26.3 10.4 32.3z" />
+                                </svg>
+                                <div
+                                    class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                                </div>
+                            </div>
+                            <a class="pr-4" href="#features">Features</a>
+                        </li>
+                        <li
+                            class="bg-white/10 backdrop-blur-md border cursor-pointer border-white/20 rounded-2xl shadow-lg p-2 m-1 mt-4 hover:bg-purple-500 hover:scale-150 transition-transform duration-400">
+                            <div class="relative">
+
+                                <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path
+                                        d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z" />
+                            </svg>
+
+                                <a class="#upload" href="#upload">Uploads</a>
+                        </li>
+                        <li
+                            class="bg-white/10 backdrop-blur-md border cursor-pointer border-white/20 rounded-2xl shadow-lg p-2 m-1 mt-4 hover:bg-purple-500 hover:scale-150 transition-transform duration-400">
+                            <div class="relative">
+                                <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path
+                                        d="M443.4 64H4.6c0 103.3 22.2 180.1 43.4 222.4C112 414.1 224 448 225.3 448a312.8 312.8 0 0 0 140.6-103.5c25.9-33.9 53.1-87.2 65.9-145.8H171.8c4.1 36.4 22.2 67.9 45.1 86.9h88.6c-17 28.2-48.2 54.4-80.5 69.5-31.2-13.3-69.1-46.5-96.5-98.4-26.7-53.8-27.1-105.9-27.1-105.9H437.6A625.9 625.9 0 0 0 443.4 64z" />
+                                </svg>
+
+                                <a class="#upload" href="#guidline">GuildLine</a>
+                        </li>
+                        <li
+                            class="bg-white/10 backdrop-blur-md border cursor-pointer border-white/20 rounded-2xl shadow-lg p-2  m-1 mt-4 hover:bg-purple-500 hover:scale-150 transition-transform duration-400">
+
+                            <div class="">
+                                <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path
+                                        d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 256l64 0c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16L80 384c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zm256-32l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z" />
+                                </svg>
+
+                            </div>
+                            <a class="" href="#about">About</a>
+                        </li>
+                    </ul>
+
+                </nav>
+
+            </div>
+
+            <div class="text-white pl-4">
+                <a href="#upload">
+                    <button
+                        class="magnetic-button hidden md:flex border border-white/20 px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-br from-deepChocolate to-purple-800 rounded-lg relative overflow-hidden hover:shadow-xl hover:shadow-blue-500/20 transition-all"
+                        style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+                        <span class="relative z-10">Get Started</span>
+                    </button>
+                </a>
+
+            </div>
+            <div id="menuButton"
+                class="menu-button absolute bottom-2 right-3 bg-white/90 backdrop-blur-sm rounded-xl p-1 shadow-lg max-w-xs md:hidden cursor-pointer">
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        <svg id="menuArrow"
+                            class="w-6 h-6 fill-deepChocolate hover:scale-150 transition-transform duration-400 cursor-pointer"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <path
+                                d="M151.6 469.6C145.5 476.2 137 480 128 480s-17.5-3.8-23.6-10.4l-88-96c-11.9-13-11.1-33.3 2-45.2s33.3-11.1 45.2 2L96 365.7 96 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 301.7 32.4-35.4c11.9-13 32.2-13.9 45.2-2s13.9 32.2 2 45.2l-88 96zM320 480c-17.7 0-32-14.3-32-32s14.3-32 32-32l32 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32 0zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-96 0zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32l160 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-160 0zm0-128c-17.7 0-32-14.3-32-32s14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L320 96z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!-- Mobile view -->
+        <div id="menuNav" class="fixed bottom-0 left-0 right-0 z-50 md:hidden px-4 pb-4">
+            <div class="bg-black/20 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg ">
+                <div class="grid grid-cols-5 h-16 px-2">
+                    <!-- Home -->
+                    <a href="#home"
+                        class="flex flex-col items-center justify-center mobile_anima text-gray-200 hover:text-white transition-colors relative group mobile-nav-active">
+                        <div class="relative">
+
+                            <svg class="w-6 h-6 fill-chocolate" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M288 350.1l0 1.9-32 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L447.3 128.1c-12.3-1-25 3-34.8 11.7c-35.4 31.6-65.6 67.7-87.3 102.8C304.3 276.5 288 314.9 288 350.1zM480 512c-88.4 0-160-71.6-160-160c0-76.7 62.5-144.7 107.2-179.4c5-3.9 10.9-5.8 16.8-5.8c7.9-.1 16 3.1 22 9.2l46 46 11.3-11.3c11.7-11.7 30.6-12.7 42.3-1C624.5 268 640 320.2 640 352c0 88.4-71.6 160-160 160zm64-111.8c0-36.5-37-73-54.8-88.4c-5.4-4.7-13.1-4.7-18.5 0C453 327.1 416 363.6 416 400.2c0 35.3 28.7 64 64 64s64-28.7 64-64z" />
+                            </svg>
+                            <div
+                                class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                            </div>
+                        </div>
+
+                        <span class="text-xs mt-1">Home</span>
+                    </a>
+
+                    <!-- Socials -->
+                    <a href="#features"
+                        class="flex flex-col items-center justify-center text-gray-200 hover:text-white transition-colors relative group">
+                        <div class="relative">
+
+                            <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M201.1 71.9c16.9-5 26.6-22.9 21.5-39.8s-22.9-26.6-39.8-21.5c-21.5 6.4-41.8 15.5-60.6 27C114.3 34 105.4 32 96 32C60.7 32 32 60.7 32 96c0 9.4 2 18.3 5.6 26.3c-11.5 18.7-20.6 39-27 60.6c-5 16.9 4.6 34.8 21.5 39.8s34.8-4.6 39.8-21.5c4.3-14.6 10.4-28.5 17.9-41.4c2 .2 4.1 .3 6.1 .3c35.3 0 64-28.7 64-64c0-2.1-.1-4.1-.3-6.1c12.9-7.5 26.8-13.6 41.4-17.9zm128-61.3c-16.9-5-34.8 4.6-39.8 21.5s4.6 34.8 21.5 39.8c14.6 4.3 28.5 10.4 41.4 17.9c-.2 2-.3 4.1-.3 6.1c0 35.3 28.7 64 64 64c2.1 0 4.1-.1 6.2-.3c7.5 12.9 13.6 26.8 17.9 41.4c5 16.9 22.9 26.6 39.8 21.5s26.6-22.9 21.5-39.8c-6.4-21.5-15.5-41.8-27-60.6c3.6-8 5.6-16.9 5.6-26.3c0-35.3-28.7-64-64-64c-9.4 0-18.3 2-26.3 5.6c-18.7-11.5-39-20.6-60.6-27zM71.9 310.9c-5-16.9-22.9-26.6-39.8-21.5s-26.6 22.9-21.5 39.8c6.4 21.5 15.5 41.8 27 60.6C34 397.7 32 406.6 32 416c0 35.3 28.7 64 64 64c9.4 0 18.3-2 26.3-5.6c18.7 11.5 39 20.6 60.6 27c16.9 5 34.8-4.6 39.8-21.5s-4.6-34.8-21.5-39.8c-14.6-4.3-28.5-10.4-41.4-17.9c.2-2 .3-4.1 .3-6.2c0-35.3-28.7-64-64-64c-2.1 0-4.1 .1-6.2 .3c-7.5-12.9-13.6-26.8-17.9-41.4zm429.4 18.3c5-16.9-4.6-34.8-21.5-39.8s-34.8 4.6-39.8 21.5c-4.3 14.6-10.4 28.5-17.9 41.4c-2-.2-4.1-.3-6.2-.3c-35.3 0-64 28.7-64 64c0 2.1 .1 4.1 .3 6.2c-12.9 7.5-26.8 13.6-41.4 17.9c-16.9 5-26.6 22.9-21.5 39.8s22.9 26.6 39.8 21.5c21.5-6.4 41.8-15.5 60.6-27c8 3.6 16.9 5.6 26.3 5.6c35.3 0 64-28.7 64-64c0-9.4-2-18.3-5.6-26.3c11.5-18.7 20.6-39 27-60.6zM192.8 256.8c0-15.6 5.6-29.9 14.9-41.1L223 231c6.6 6.6 17.8 1.9 17.8-7.4l0-60.5c0-5.7-4.7-10.4-10.4-10.4l-60.5 0c-9.3 0-13.9 11.2-7.4 17.8l11.2 11.2c-17.9 19.8-28.9 46.2-28.9 75.1c0 43.6 24.9 81.3 61.1 99.8c11.8 6 26.3 1.4 32.3-10.4s1.4-26.3-10.4-32.3c-20.8-10.6-34.9-32.2-34.9-57zm93.1-58.6c20.8 10.6 34.9 32.2 34.9 57c0 15.6-5.6 29.9-14.9 41.1L290.6 281c-6.6-6.6-17.8-1.9-17.8 7.4l0 60.5c0 5.7 4.7 10.4 10.4 10.4l60.5 0c9.3 0 13.9-11.2 7.4-17.8l-11.2-11.2c17.9-19.8 28.9-46.2 28.9-75.1c0-43.6-24.9-81.3-61.1-99.8c-11.8-6-26.3-1.4-32.3 10.4s-1.4 26.3 10.4 32.3z" />
+                            </svg>
+                            <div
+                                class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                            </div>
+                        </div>
+                        <span class="text-xs mt-1">Featurs</span>
+                    </a>
+
+                    <!-- Downloads -->
+                    <a href="#upload"
+                        class="flex flex-col items-center justify-center text-gray-200 hover:text-white transition-colors relative group">
+                        <div class="relative">
+
+                            <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z" />
+                            </svg>
+                            <div
+                                class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                            </div>
+                        </div>
+                        <span class="text-xs mt-1">Uploads</span>
+                    </a>
+                    <!-- Guildline -->
+                    <a href="#guidline"
+                        class="flex flex-col items-center justify-center text-gray-200 hover:text-white transition-colors relative group">
+                        <div class="relative">
+                            <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M443.4 64H4.6c0 103.3 22.2 180.1 43.4 222.4C112 414.1 224 448 225.3 448a312.8 312.8 0 0 0 140.6-103.5c25.9-33.9 53.1-87.2 65.9-145.8H171.8c4.1 36.4 22.2 67.9 45.1 86.9h88.6c-17 28.2-48.2 54.4-80.5 69.5-31.2-13.3-69.1-46.5-96.5-98.4-26.7-53.8-27.1-105.9-27.1-105.9H437.6A625.9 625.9 0 0 0 443.4 64z" />
+                            </svg>
+
+                            <div
+                                class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                            </div>
+                        </div>
+                        <span class="text-xs mt-1">Guidline</span>
+                    </a>
+
+                    <!-- About -->
+                    <a href="#about"
+                        class="flex flex-col items-center justify-center text-gray-200 hover:text-white transition-colors relative group">
+                        <div class="relative">
+
+                            <svg class="w-6 h-6 fill-gray-200" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm80 256l64 0c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16L80 384c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zm256-32l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z" />
+                            </svg>
+                            <div
+                                class="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300">
+                            </div>
+                        </div>
+                        <span class="text-xs mt-1">About</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- mobile smooth effect script -->
+        <script>
+            // Smooth scrolling logic
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        </script>
+
+        <!-- mobile smooth effect style -->
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+        <!-- mobile view script -->
+
+        <script>
+            const menuButton = document.getElementById('menuButton');
+            const menuNav = document.getElementById('menuNav');
+            const menuArrow = document.getElementById('menuArrow');
+
+            menuButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent event propagation issues.
+
+                // Toggle menu visibility
+                if (menuNav.classList.contains('opacity-0')) {
+                    menuNav.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-full');
+                    menuNav.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    menuNav.classList.add('opacity-0', 'pointer-events-none', 'translate-y-full');
+                    menuNav.classList.remove('opacity-100', 'translate-y-0');
+                }
+
+                // Toggle arrow rotation
+                menuArrow.classList.toggle('rotate-180');
+            });
+        </script>
+
+        <!-- Scroll Up and Down section -->
+        <div class="fixed left-4 top-1/2 z-20 transform -translate-y-1/2 flex flex-col space-y-4">
+            <!-- Scroll Up Button -->
+            <button id="scrollUpBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                class="bg-purple-400 text-white p-3 rounded-full shadow hover:bg-black/20 focus:outline-none hidden">
+                <svg class="w-6 h-6 fill-white hover:scale-150 transition-transform duration-400 cursor-pointer"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path
+                        d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+                </svg>
+            </button>
+
+            <!-- Scroll Down Button -->
+            <button id="scrollDownBtn"
+                onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })"
+                class="bg-black/20 text-white p-3 rounded shadow hover:bg-purple-300 focus:outline-none">
+                <svg class="w-6 h-6 fill-white hover:scale-150 transition-transform duration-400 cursor-pointer"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path
+                        d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                </svg>
+            </button>
+        </div>
+
+        <script>
+            const scrollUpBtn = document.getElementById('scrollUpBtn');
+            const scrollDownBtn = document.getElementById('scrollDownBtn');
+
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.body.scrollHeight;
+
+                // Toggle the visibility of the buttons
+                if (scrollPosition > 0) {
+                    scrollUpBtn.classList.remove('hidden');
+                } else {
+                    scrollUpBtn.classList.add('hidden');
+                }
+
+                if (scrollPosition + windowHeight >= documentHeight) {
+                    scrollDownBtn.classList.add('hidden');
+                } else {
+                    scrollDownBtn.classList.remove('hidden');
+                }
+            });
+        </script>
+
+
+
+        <!-- home(Learn about Vitaxion) -->
+        <section id="home"
+            class="relative py-20 px-6 overflow-hidden mt-10 rounded-2xl bg-gradient-to-b from-black/20 to-blue-50/30">
+            <div class="max-w-7xl mx-auto ">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <!-- Preview Content -->
+                    <div class="relative z-10 home_data">
+                        <h2
+                            class="text-4xl lg:text-5xl font-bold mb-6 tracking-tight split-text text-white home_data_box">
+                            Learn About
+                            <span class="bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent">
+                                ViTaxion
+                            </span>
+                            Video to <span
+                                class="bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Audio
+                                Extractor</span>
+                        </h2>
+
+                        <!-- Interactive Feature List -->
+                        <div class="space-y-6 mt-8">
+                            <div class="feature-card group aos-init aos-animate home_data_box" data-aos="fade-right">
+                                <div class="bg-white rounded-xl shadow-lg p-6 max-w-lg w-full">
+                                    <!-- Your Provided Card -->
+                                    <div
+                                        class="relative p-6 bg-white border-2 border-deepChocolate rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer mb-6">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                                <svg class="w-6 h-6 fill-deepChocolate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M248 106.6c18.9-9 32-28.3 32-50.6c0-30.9-25.1-56-56-56s-56 25.1-56 56c0 22.3 13.1 41.6 32 50.6l0 98.8c-2.8 1.3-5.5 2.9-8 4.7l-80.1-45.8c1.6-20.8-8.6-41.6-27.9-52.8C57.2 96 23 105.2 7.5 132S1.2 193 28 208.5c1.3 .8 2.6 1.5 4 2.1l0 90.8c-1.3 .6-2.7 1.3-4 2.1C1.2 319-8 353.2 7.5 380S57.2 416 84 400.5c19.3-11.1 29.4-32 27.8-52.8l50.5-28.9c-11.5-11.2-19.9-25.6-23.8-41.7L88 306.1c-2.6-1.8-5.2-3.3-8-4.7l0-90.8c2.8-1.3 5.5-2.9 8-4.7l80.1 45.8c-.1 1.4-.2 2.8-.2 4.3c0 22.3 13.1 41.6 32 50.6l0 98.8c-18.9 9-32 28.3-32 50.6c0 30.9 25.1 56 56 56c30.7 0 55.6-24.7 56-55.2c-7.5-12.9-13.5-26.8-17.6-41.5c-4.2-4-9.1-7.3-14.4-9.9l0-98.8c2.8-1.3 5.5-2.9 8-4.7l10.5 6c5.5-15.3 13.1-29.5 22.4-42.5l-9.1-5.2c.1-1.4 .2-2.8 .2-4.3c0-22.3-13.1-41.6-32-50.6l0-98.8zM440.5 132C425 105.2 390.8 96 364 111.5c-19.3 11.1-29.4 32-27.8 52.8l-50.6 28.9c11.5 11.2 19.9 25.6 23.8 41.7L360 205.9c.4 .3 .8 .6 1.3 .9c21.7-9.5 45.6-14.8 70.8-14.8c2 0 4 0 5.9 .1c12.1-17.3 13.8-40.6 2.6-60.1zM432 512a144 144 0 1 0 0-288 144 144 0 1 0 0 288zm47.9-225c4.3 3.7 5.4 9.9 2.6 14.9L452.4 356l35.6 0c5.2 0 9.8 3.3 11.4 8.2s-.1 10.3-4.2 13.4l-96 72c-4.5 3.4-10.8 3.2-15.1-.6s-5.4-9.9-2.6-14.9L411.6 380 376 380c-5.2 0-9.8-3.3-11.4-8.2s.1-10.3 4.2-13.4l96-72c4.5-3.4 10.8-3.2 15.1 .6z"/></svg>
+                                                
+                                            </div>
+                                            <div>
+                                                <h3 class="text-lg font-semibold mb-1">AI is the Future</h3>
+                                                <p class="text-gray-600">Imagine Using AI to birth Imaginations</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center border border-black/20 gap-4 bg-gray-50 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-10">
+                                        <h2 class="text-xl font-bold text-gray-700">Video Downloader</h2>
+                                        <input
+                                            id="video-url"
+                                            type="text"
+                                            placeholder="Paste video URL here..."
+                                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        />
+                                        <button
+                                            id="download-btn"
+                                            class="w-full bg-deepChocolate text-white font-semibold py-3 rounded-lg hover:bg-black/60 transition-all"
+                                        >
+                                            Download via <span class="text-green-500">SaveFrom.net</span> 
+                                        </button>
+                                    </div>
+                                    
+                                    <script>
+                                        const downloadBtn = document.getElementById('download-btn');
+                                        const videoUrlInput = document.getElementById('video-url');
+                                    
+                                        downloadBtn.addEventListener('click', () => {
+                                            const videoUrl = videoUrlInput.value.trim();
+                                    
+                                            if (!videoUrl) {
+                                                alert('Please enter a video URL!');
+                                                return;
+                                            }
+                                    
+                                            // Redirect to Y2Mate with the video URL
+                                            const y2mateUrl = `https://en1.savefrom.net/2ol/${encodeURIComponent(videoUrl)}`;
+                                            window.open(y2mateUrl, '_blank');
+                                        });
+                                    </script>
+                                    
+                                    
+                                </div>
+
+                            </div>
+                         
+                          
+
+
+                        </div>
+                    </div>
+
+                    <!-- Interactive Preview -->
+                    <div class="relative aos-init aos-animate home_video" data-aos="fade-left">
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                            <div class="">
+                                <video class="w-full h-full object-cover" autoplay muted loop>
+                                    <source src="../public/images/video enhancer1.mp4" type="video/mp4">
+
+                                </video>
+                            </div>
+                            
+                            <!-- Interactive Elements -->
+                            <div
+                                class="hidden md:block absolute top-2 left-4 bg-black/60 backdrop-blur-sm rounded-xl  md:p-1 shadow-lg">
+                                <div class="flex items-center gap-2">
+                                    <!-- <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div> -->
+                                    <img class="w-40 h-40" src="../public/images/transparent vitaxion logo.png" alt="">
+                                    <!-- <span class="text-sm font-medium">Video Enhancer</span> -->
+                                </div>
+                            </div>
+
+                            <!-- Floating Chat -->
+                            <div
+                                class="absolute bottom-1 left-4 about_anima bg-white/90 backdrop-blur-sm rounded-xl p-2 shadow-lg max-w-xs">
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="audio-button w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center about_anima_youtube">
+                                        <a href="https://www.youtube.com/@Christian_Billionaire_Network">
+                                            <svg class="w-10 h-10 fill-red-600 hover:scale-150 transition-transform duration-400 cursor-pointer"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                                <path
+                                                    d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z" />
+                                            </svg>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- Control Bar -->
+
+                        <div 
+                        class="myaudiorecord absolute bottom-1 mb-40 right-1 bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg flex flex-col items-center">
+                        <div class="flex items-center gap-3">
+                            <button id="record-btn"
+                                class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center hover:bg-blue-200 transition-colors">
+                                <svg title="convert"
+                                    class="w-6 h-6 fill-blue-600 hover:scale-150 transition-transform duration-400 cursor-pointer"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path
+                                        d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z" />
+                                </svg>
+                            </button>
+                            <span id="record-status" class="text-sm font-medium text-gray-600">Click to
+                                Record</span>
+                        </div>
+                        <a id="download-audio3" href="#" download="recording.wav"
+                            class="hidden mt-3 bg-blue-500 text-white px-4 py-2 rounded shadow-lg hover:bg-blue-600 transition-colors">
+                            Download
+                        </a>
+                        </div>
+                    
+                        <script>
+                        // Voice recorder code
+                        const recordBtn2 = document.getElementById('record-btn');
+                        const recordStatus2 = document.getElementById('record-status');
+                        const downloadLink2 = document.getElementById('download-audio3');
+                    
+                        let mediaRecorder2;
+                        let audioChunks2 = [];
+                        let isRecording = false;
+                    
+                        function resetVoiceRecorder() {
+                            // Reset UI elements
+                            recordStatus2.textContent = 'Click to Record';
+                            downloadLink2.classList.add('hidden');
+                            downloadLink2.href = '#';
+                            
+                            // Reset recording state
+                            audioChunks2 = [];
+                            isRecording = false;
+                            
+                            // Stop any active tracks
+                            if (mediaRecorder2 && mediaRecorder2.state !== 'inactive') {
+                                mediaRecorder2.stream.getTracks().forEach(track => track.stop());
+                            }
+                        }
+                    
+                        recordBtn2.addEventListener('click', async () => {
+                            if (!mediaRecorder2 || mediaRecorder2.state === 'inactive') {
+                                try {
+                                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                                    mediaRecorder2 = new MediaRecorder(stream);
+                                    isRecording = true;
+                    
+                                    mediaRecorder2.ondataavailable = (event) => {
+                                        if (event.data.size > 0) {
+                                            audioChunks2.push(event.data);
+                                        }
+                                    };
+                    
+                                    mediaRecorder2.onstop = () => {
+                                        const audioBlob = new Blob(audioChunks2, { type: 'audio/wav' });
+                                        const audioUrl = URL.createObjectURL(audioBlob);
+                                        downloadLink2.href = audioUrl;
+                                        downloadLink2.classList.remove('hidden');
+                                        recordStatus2.textContent = 'Recording Stopped';
+                                        isRecording = false;
+                                    };
+                    
+                                    audioChunks2 = [];
+                                    mediaRecorder2.start();
+                                    recordStatus2.textContent = 'Recording...';
+                                } catch (error) {
+                                    console.error('Error accessing microphone:', error);
+                                    recordStatus2.textContent = 'Microphone Access Denied';
+                                    isRecording = false;
+                                }
+                            } else if (mediaRecorder2.state === 'recording') {
+                                mediaRecorder2.stop();
+                                isRecording = false;
+                            }
+                        });
+                    
+                        // Add download event listener with completion message
+                        downloadLink2.addEventListener('click', () => {
+                            // Show download completion message
+                            const message = document.createElement('div');
+                            message.className = 'fixed bottom-5 right-5 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out z-50';
+                            message.innerHTML = `
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Voice Recording Downloaded Successfully!</span>
+                                </div>
+                            `;
+                            
+                            document.body.appendChild(message);
+                            
+                            // Animate the message in
+                            setTimeout(() => {
+                                message.style.transform = 'translateY(-20px)';
+                            }, 100);
+                            
+                            // Remove the message after 3 seconds
+                            setTimeout(() => {
+                                message.style.transform = 'translateY(100px)';
+                                message.style.opacity = '0';
+                                setTimeout(() => {
+                                    document.body.removeChild(message);
+                                }, 500);
+                            }, 3000);
+
+                            // Use setTimeout to ensure download starts before reset
+                            setTimeout(() => {
+                                resetVoiceRecorder();
+                            }, 100);
+                        });
+                    
+                        </script>
+
+                        <div class="feature-card group aos-init aos-animate home_data_box mt-6" data-aos="fade-right"
+                        data-aos-delay="100">
+                        <div
+                            class="relative p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-6 h-6 text-purple-600" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 384 512">
+                                        <path
+                                            d="M96 96l0 160c0 53 43 96 96 96s96-43 96-96l-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-32-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-32-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0c0-53-43-96-96-96S96 43 96 96zM320 240l0 16c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 24z" />
+                                    </svg>
+
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold mb-1">Audio Record</h3>
+                                    <p class="text-gray-600">Record your Voice by clicking the record button</p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+             </div>
+
+    </section>
+    <!-- home(Learn about Vitaxion) -->
+
+
+    <!-- Second content after the home  -->
+    <section class="home ">
+        <div class="text-center mb-12 animate__animated animate__fadeIn mt-10">
+            <!-- Supported Platforms -->
+            <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-8 backdrop-filter ">
+                <h3 class="text-white text-lg mb-6"> <span class="text-orange-500">Vitaxion</span> Easy Way to get
+                    Video to Audio Ready</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-4 gap-6  home_easy_way">
+                    <!-- Platform icons will be inserted here by JavaScript -->
+                    <!-- bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent -->
+                    <div
+                        class="platform-icon home_data_box bg-white/20 backdrop-blur-sm rounded-lg w- p-4 pl-400 flex flex-col items-center hover:bg-white/30 transition-all show cursor-pointer">
+                        <div>
+                            <svg class="w-10 fill-deepChocolate hover:scale-150 transition-transform duration-400 "
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM64 288c0-17.7 14.3-32 32-32l96 0c17.7 0 32 14.3 32 32l0 96c0 17.7-14.3 32-32 32l-96 0c-17.7 0-32-14.3-32-32l0-96zM300.9 397.9L256 368l0-64 44.9-29.9c2-1.3 4.4-2.1 6.8-2.1c6.8 0 12.3 5.5 12.3 12.3l0 103.4c0 6.8-5.5 12.3-12.3 12.3c-2.4 0-4.8-.7-6.8-2.1z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div
+                        class="platform-icon home_data_box bg-white/20 backdrop-blur-sm rounded-lg w- p-4 pl-400 flex flex-col items-center hover:bg-white/30 transition-all show ">
+                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                            to
+                        </h1>
+                    </div>
+                    <div
+                        class="platform-icon home_data_box bg-white/20 backdrop-blur-sm rounded-lg w- p-4 pl-400 flex flex-col items-center hover:bg-white/30 transition-all show cursor-pointer">
+                        <div>
+                            <svg class="w-10 fill-deepChocolate hover:scale-150 transition-transform duration-400"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div
+                        class="platform-icon home_data_box bg-white/20 backdrop-blur-sm rounded-lg w- p-4 pl-400 flex flex-col items-center hover:bg-white/30 transition-all show">
+                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                            <span class="text-3xl">Extractor</span>
+                        </h1>
+                    </div>
+                    <div class="">
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <!-- GuildLine sections -->
+    <section id="guidline">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-white">GuildLines</h2>
+            <p class="text-white text-lg mb-6 text-center">ViTaxion, comes with best user experience</p>
+            <!-- <h3 class="text-white text-lg mb-6"></h3> -->
+            <div class="grid grid-cols-1 md:grid-cols-4 sm:grid-cols-2 gap-8">
+                <!-- Step 1 -->
+                <div
+                    class="bg-black/20 rounded-lg p-6 text-center text-white shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-video  text-white text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Upload Video</h3>
+                    <p class="">Upload Any Video of choice and click to see the magic.</p>
+                </div>
+                <!-- Step 2 -->
+                <div
+                    class="bg-black/20 rounded-lg guild_animation p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <!-- <i class="fa-solid fa-microphone-lines"></i> -->
+                        <svg class="w-10 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path
+                                d="M96 96l0 160c0 53 43 96 96 96s96-43 96-96l-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-32-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-32-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0c0-53-43-96-96-96S96 43 96 96zM320 240l0 16c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 24z" />
+                        </svg>
+                        <!-- <i class="fas fa-audio text-white text-2xl"></i> -->
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Audio Extraction</h3>
+                    <p class="text-white">Extract, by clicking on the Extraction button</p>
+                </div>
+                <!-- Step 3 -->
+                <div
+                    class="bg-black/20 rounded-lg p-6 text-center guild_animation shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <!-- crops -->
+                        <span>
+
+                        </span>
+                        <!-- rename -->
+                        <span>
+                            <svg class="w-10 fill-white" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z" />
+                            </svg>
+                        </span>
+                        <!-- <i class="fas fa-info-circle text-white text-4xl"></i> -->
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Rename Audio</h3>
+                    <p class="text-white">Rename Audio With Ease</p>
+                </div>
+                <!-- step 4 -->
+                <div
+                    class="bg-black/20 rounded-lg p-6 text-center guild_animation shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 fill-white" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                            <path
+                                d="M256 0a256 256 0 1 0 0 512A256 256 0 1 0 256 0zM244.7 395.3l-112-112c-4.6-4.6-5.9-11.5-3.5-17.4s8.3-9.9 14.8-9.9l64 0 0-96c0-17.7 14.3-32 32-32l32 0c17.7 0 32 14.3 32 32l0 96 64 0c6.5 0 12.3 3.9 14.8 9.9s1.1 12.9-3.5 17.4l-112 112c-6.2 6.2-16.4 6.2-22.6 0z" />
+                        </svg>
+                        <!-- <i class="fas fa-audio text-white text-2xl"></i> -->
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Download Audio</h3>
+                    <p class="text-white">Extract Audio to Download </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- GuildLine sections -->
+    <!-- more section -->
+
+  
+      <!-- Upload Video section -->
+      <section id="upload" class="Audio upload mt-10">
+        <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-8 backdrop-filter">
+            <h3 class="text-white text-lg mb-6 text-center video_upload_Anima2">Click the Upload button to see the <span
+                    class="text-purple-500">Vitaxion Magic</span></h3>
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-6">
+                <!-- Video Upload Section -->
+                <div
+                    class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-xl video_upload_Anima">
+                    <h3 class="text-2xl sm:text-xl font-semibold mb-6 text-center text-white">Upload Video</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- File Upload -->
+                        <label for="file-upload" class="cursor-pointer group video_upload_Anima2">
+                            <div
+                                class="aspect-square bg-white rounded-xl border-2 border-dashed border-white/50 flex flex-col items-center justify-center gap-4 group-hover:border-brand-green group-hover:bg-brand-green/10 transition-all duration-300">
+                                <div
+                                    class="w-16 h-16 bg-purple-500 border hover:bg-purple-400 border-white rounded-full bg-brand-green/20 flex items-center justify-center group-hover:bg-brand-green/30 transition-all duration-300">
+                                    <i
+                                        class="fas fa-upload text-2xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                                </div>
+                                <p class="text-sm font-medium text-black">Upload Video</p>
+                            </div>
+                        </label>
+                        <input type="file" id="file-upload" class="hidden" accept="video/*"
+                            onchange="handleFileUpload(event)">
+
+                        <!-- Video Preview Container -->
+                        <div id="preview-container" class="md:block video_upload_Anima">
+                            <div
+                                class="aspect-square rounded-xl overflow-hidden border-2 border-dashed border-white/50 flex flex-col items-center justify-center gap-4 group-hover:border-brand-green group-hover:bg-brand-green/10 transition-all duration-300">
+                                <video id="video-preview" class="w-full h-full object-cover" controls>
+                                    Your browser does not support the video element.
+                                </video>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <button id="play-pause-video" 
+                                    class="text-white bg-purple-500 hover:bg-purple-400 p-2 rounded-lg">
+                                    Pause
+                                </button>
+                                <button id="remove-video" 
+                                    class="text-white bg-purple-500 hover:bg-purple-400 p-2 rounded-lg">
+                                    Remove Video
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="error-message" class="text-red-500 hidden mt-4 text-center">Invalid video format.
+                            Please upload a valid video file.</div>
+
+                        <!-- Audio Extraction -->
+                        <button id="extract-audio"
+                            class="mt-4 text-white bg-purple-500 hover:bg-purple-400 p-2 rounded-lg hidden">Extract
+                            Audio</button>
+
+                        <!-- Audio Progress Bar -->
+                        <div id="progress-container" class="hidden">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-white">in Progress please wait...</p>
+                                <button id="cancel-extraction" 
+                                    class="text-white bg-purple-500 hover:bg-purple-400 px-4 py-2 rounded-lg ml-4">
+                                    Extract Path
+                                </button>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div id="progress-bar" class="bg-purple-500 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <p id="progress-text" class="text-white text-center mt-2">0%</p>
+                        </div>
+
+                        <!-- Audio Preview -->
+                        <div id="audio-preview-container" class="hidden mt-4">
+                            <audio id="audio-preview" controls class="w-full">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <!-- Rename Audio -->
+                        <div id="rename-audio-container" class="hidden mt-4">
+                            <label for="audio-name" class="text-white block mb-2">Rename audio to your choice:</label>
+                            <input 
+                                type="text" 
+                                id="audio-name" 
+                                class="w-full p-2 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" 
+                                placeholder="Enter audio name (required)" 
+                            />
+                        </div>
+
+                        <!-- Download Audio Button -->
+                        <div>
+                            <a id="download-audio" href="#"
+                                class="mt-4 text-white text-center bg-purple-500 hover:bg-purple-400 justify-center p-2 rounded-lg hidden"
+                                download="extracted-audio.mp3">Download Audio</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Upload Video Script code -->
+    <script>
+        let mediaRecorder;
+        let video;
+        let audioChunks = [];
+        let audioBlob;
+        let extractionInProgress = false;
+        let progressInterval;
+
+        function resetAfterDownload() {
+            // Hide audio preview and related elements
+            document.getElementById('audio-preview-container').classList.add('hidden');
+            document.getElementById('download-audio').classList.add('hidden');
+            document.getElementById('rename-audio-container').classList.add('hidden');
+            
+            // Reset audio name input and remove validation styling
+            const renameInput = document.getElementById('audio-name');
+            renameInput.value = '';
+            renameInput.classList.remove('ring-2', 'ring-red-500');
+            
+            // Show extract button again
+            document.getElementById('extract-audio').classList.remove('hidden');
+            
+            // Reset remove button text
+            document.getElementById('remove-video').textContent = 'Remove Video';
+            
+            // Reset audio chunks and blob
+            audioChunks = [];
+            audioBlob = null;
+        }
+
+        function resetExtractionState() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            if (progressInterval) {
+                clearInterval(progressInterval);
+            }
+            
+            const video = document.getElementById('video-preview');
+            video.pause();
+            document.getElementById('play-pause-video').textContent = 'Play';
+            
+            // Reset all UI elements
+            document.getElementById('progress-container').classList.add('hidden');
+            resetAfterDownload(); // Include audio reset
+            
+            // Reset progress
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            progressBar.style.width = '0%';
+            progressText.textContent = '0%';
+            
+            extractionInProgress = false;
+            audioChunks = [];
+        }
+
+        // Update handleFileUpload to handle only video preview
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            const errorMessage = document.getElementById('error-message');
+            const previewContainer = document.getElementById('preview-container');
+            const videoPreview = document.getElementById('video-preview');
+            const extractButton = document.getElementById('extract-audio');
+            const audioPreviewContainer = document.getElementById('audio-preview-container');
+            const progressContainer = document.getElementById('progress-container');
+            const playPauseButton = document.getElementById('play-pause-video');
+
+            // Clear previous error message and reset
+            errorMessage.classList.add('hidden');
+            previewContainer.classList.add('hidden');
+            audioPreviewContainer.classList.add('hidden');
+            progressContainer.classList.add('hidden');
+            videoPreview.src = "";
+
+            if (file && file.type.startsWith('video/')) {
+                const videoURL = URL.createObjectURL(file);
+                videoPreview.src = videoURL;
+                previewContainer.classList.remove('hidden');
+                extractButton.classList.remove('hidden');
+                
+                // Reset play/pause button state
+                playPauseButton.textContent = 'Pause';
+                
+                // Add listener for video ending
+                videoPreview.onended = function() {
+                    playPauseButton.textContent = 'Play';
+                };
+            } else {
+                errorMessage.classList.remove('hidden');
+            }
+        }
+
+        // Set up remove video button
+        document.getElementById('remove-video').onclick = removeVideo;
+
+        // Set up cancel extraction button
+        document.getElementById('cancel-extraction').onclick = resetExtractionState;
+
+        // Update the extraction code
+        document.getElementById('extract-audio').addEventListener('click', async function () {
+            if (extractionInProgress) return;
+
+            extractionInProgress = true;
+            const video = document.getElementById('video-preview');
+            const audioPreview = document.getElementById('audio-preview');
+            const audioPreviewContainer = document.getElementById('audio-preview-container');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const downloadButton = document.getElementById('download-audio');
+            const renameAudioContainer = document.getElementById('rename-audio-container');
+            const extractButton = document.getElementById('extract-audio');
+            const removeButton = document.getElementById('remove-video');
+
+            // Reset any previous audio states
+            resetAfterDownload();
+
+            if (!video.src) return;
+
+            try {
+                // Show progress container and hide extract button
+                progressContainer.classList.remove('hidden');
+                extractButton.classList.add('hidden');
+
+                // Create an audio context
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create a media stream from the video element
+                const stream = video.captureStream();
+                const audioTrack = stream.getAudioTracks()[0];
+                
+                if (!audioTrack) {
+                    throw new Error('No audio track found in video');
+                }
+
+                const mediaStream = new MediaStream([audioTrack]);
+                
+                // Create and configure MediaRecorder
+                mediaRecorder = new MediaRecorder(mediaStream, {
+                    mimeType: 'audio/webm'
+                });
+
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    if (audioChunks.length > 0) {
+                        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+
+                        // Set audio preview and download button
+                        audioPreview.src = audioUrl;
+                        audioPreviewContainer.classList.remove('hidden');
+                        downloadButton.href = audioUrl;
+                        downloadButton.download = 'extracted-audio.webm';
+                        downloadButton.classList.remove('hidden');
+                        renameAudioContainer.classList.remove('hidden');
+
+                        // Add focus to rename input
+                        const renameInput = document.getElementById('audio-name');
+                        renameInput.focus();
+
+                        // Change remove button text to "Remove Audio"
+                        removeButton.textContent = 'Remove Audio';
+
+                        // Show extraction completion message
+                        const message = document.createElement('div');
+                        message.className = 'fixed bottom-5 right-5 bg-purple-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out z-50';
+                        message.innerHTML = `
+                            <div class="flex items-center space-x-2">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span>Audio Extraction Completed Successfully!</span>
+                            </div>
+                        `;
+                        
+                        document.body.appendChild(message);
+                        
+                        // Animate the message in
+                        setTimeout(() => {
+                            message.style.transform = 'translateY(-20px)';
+                        }, 100);
+                        
+                        // Remove the message after 3 seconds
+                        setTimeout(() => {
+                            message.style.transform = 'translateY(100px)';
+                            message.style.opacity = '0';
+                            setTimeout(() => {
+                                document.body.removeChild(message);
+                            }, 500);
+                        }, 3000);
+                    }
+
+                    // Hide progress bar after extraction
+                    progressContainer.classList.add('hidden');
+                    extractionInProgress = false;
+                };
+
+                // Start the extraction process
+                video.currentTime = 0;
+                await video.play();
+                mediaRecorder.start();
+
+                // Record for the duration of the video
+                video.onended = () => {
+                    mediaRecorder.stop();
+                    video.pause();
+                };
+
+                // Update progress based on video playback
+                progressInterval = setInterval(() => {
+                    const progress = (video.currentTime / video.duration) * 100;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = Math.round(progress) + '%';
+
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                    }
+                }, 100);
+
+            } catch (error) {
+                console.error('Audio extraction failed:', error);
+                resetExtractionState();
+                alert('Audio extraction failed. Please make sure your video contains audio.');
+            }
+        });
+
+        // Add validation function for rename field
+        function validateRename() {
+            const audioName = document.getElementById('audio-name').value.trim();
+            const renameInput = document.getElementById('audio-name');
+            const downloadButton = document.getElementById('download-audio');
+
+            if (!audioName) {
+                // Highlight rename input and scroll to it
+                renameInput.classList.add('ring-2', 'ring-red-500');
+                renameInput.focus();
+                renameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            }
+            
+            renameInput.classList.remove('ring-2', 'ring-red-500');
+            return true;
+        }
+
+        // Update the download button event listener
+        document.getElementById('download-audio').addEventListener('click', function(e) {
+            if (!validateRename()) {
+                e.preventDefault(); // Prevent download if validation fails
+                alert('Please enter a name for your audio file before downloading.');
+                return;
+            }
+            
+            // Proceed with download and reset
+            setTimeout(resetAfterDownload, 100);
+        });
+
+        // Update the rename input event listener
+        document.getElementById('audio-name').addEventListener('input', function () {
+            const audioName = this.value.trim();
+            const downloadButton = document.getElementById('download-audio');
+
+            if (audioName) {
+                this.classList.remove('ring-2', 'ring-red-500');
+                downloadButton.download = `${audioName}.webm`;
+            } else {
+                downloadButton.download = 'extracted-audio.webm';
+            }
+        });
+
+        // Add play/pause functionality
+        const playPauseButton = document.getElementById('play-pause-video');
+        const videoPreview = document.getElementById('video-preview');
+
+        playPauseButton.addEventListener('click', function() {
+            if (videoPreview.paused) {
+                videoPreview.play();
+                playPauseButton.textContent = 'Pause';
+            } else {
+                videoPreview.pause();
+                playPauseButton.textContent = 'Play';
+            }
+        });
+
+        // Update removeVideo function to handle both video and audio states
+        function removeVideo() {
+            resetExtractionState();
+            // Additional reset for video removal
+            document.getElementById('file-upload').value = '';
+            document.getElementById('video-preview').src = '';
+            document.getElementById('preview-container').classList.add('hidden');
+            document.getElementById('extract-audio').classList.add('hidden');
+            document.getElementById('play-pause-video').textContent = 'Pause';
+            document.getElementById('remove-video').textContent = 'Remove Video'; // Reset text
+
+            // Show clear video message
+            const message = document.createElement('div');
+            message.className = 'fixed bottom-5 right-5 bg-purple-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out z-50';
+            message.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    <span>Video Cleared Successfully!</span>
+                </div>
+            `;
+            
+            document.body.appendChild(message);
+            
+            // Animate the message in
+            setTimeout(() => {
+                message.style.transform = 'translateY(-20px)';
+            }, 100);
+            
+            // Remove the message after 3 seconds
+            setTimeout(() => {
+                message.style.transform = 'translateY(100px)';
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(message);
+                }, 500);
+            }, 3000);
+        }
+
+        // Add download event listener with completion message
+        const downloadAudio = document.getElementById('download-audio');
+        
+        downloadAudio.addEventListener('click', () => {
+            // Show download completion message
+            const message = document.createElement('div');
+            message.className = 'fixed bottom-5 right-5 bg-purple-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out z-50';
+            message.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Downloaded Successfully!</span>
+                </div>
+            `;
+            
+            document.body.appendChild(message);
+            
+            // Animate the message in
+            setTimeout(() => {
+                message.style.transform = 'translateY(-20px)';
+            }, 100);
+            
+            // Remove the message after 3 seconds
+            setTimeout(() => {
+                message.style.transform = 'translateY(100px)';
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(message);
+                }, 500);
+            }, 3000);
+
+            // Reset the upload section after download
+            setTimeout(() => {
+                resetUploadSection();
+            }, 100);
+        });
+
+        function resetUploadSection() {
+            // Reset file input
+            const fileUpload = document.getElementById('file-upload');
+            if (fileUpload) fileUpload.value = '';
+            
+            // Reset video preview
+            const videoPreview = document.getElementById('video-preview');
+            if (videoPreview) videoPreview.src = '';
+            
+            // Hide download button and other elements
+            downloadAudio.classList.add('hidden');
+            document.getElementById('audio-preview-container').classList.add('hidden');
+            document.getElementById('rename-audio-container').classList.add('hidden');
+            
+            // Reset any other UI elements as needed
+            const extractButton = document.getElementById('extract-audio');
+            if (extractButton) extractButton.classList.remove('hidden');
+        }
+    </script>
+    <!-- Upload Video section -->
+
+
+
+    <!-- Feactures Section -->
+    <section id="features">
+        <div class="text-center mb-12 animate__animated animate__fadeIn mt-10">
+            <section>
+                <div class="backdrop-blur-sm bg-black/20 p-8 rounded-2xl">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white feature_anima"><span
+                            class="bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent">ViTaxion</span>
+                        Video to Audio <span
+                            class="bg-gradient-to-r from-purple-600 to-orange-600 bg-clip-text text-transparent">Extractor</span>
+                    </h1>
+                    <p class="text-xl opacity-90 mb-8 text-white feature_anima"> Features That will Blow Your Mind </p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        <span
+                            class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full feature_anima border border-orange-500">
+                            <i class="fas fa-check-circle text-white"></i>
+                            <span class="text-white"><a href="">Video to Audio Extractor</a></span>
+                        </span>
+                        <span
+                            class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full feature_anima border border-white">
+                            <i class="fas fa-check-circle text-orange-500 "></i>
+                            <span class="text-white"><a href="">Video Crops <span class="text-red-500"> (Unavailable At
+                                        the Moment)</span> </a></span>
+                        </span>
+                        <span
+                            class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full  feature_anima border border-orange-500">
+                            <i class="fas fa-check-circle text-white"></i>
+                            <span class="text-white"><a href="">Audo Crops <span class="text-red-500"> (Unavailable At
+                                        the Moment)</span> </a></span>
+                        </span>
+                        <span
+                            class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full  feature_anima border border-white">
+                            <i class="fas fa-check-circle text-orange-500"></i>
+                            <span class="text-white"><a href="">Audio Renamer</a></span>
+                        </span>
+                    </div>
+                </div>
+            </section>
+            <!-- Supported Platforms -->
+
+        </div>
+    </section>
+    <!-- Feactures Section -->
+
+    <!-- Unavailable section -->
+    <section id="Unavailable section">
+        <div class="text-center mb-12 animate__animated animate__fadeIn mt-10">
+            <div class="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-8 backdrop-filter">
+                <div class="">
+                    <h3 class="text-white text-lg mb-6 Unavailable_anima">Unavailable At the Moment</h3>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-6">
+                    <!-- AI Video Enhancer -->
+                    <div class="Unavailable_anima">
+                        <div class="platform-card">
+                            <div class="image-wrapper">
+                                <img class="platform-image"
+                                    src="../public/images/Ai video enhancer.png" alt="...">
+                            </div>
+                            <span class="platform-label">Video Enhancer</span>
+                        </div>
+                    </div>
+
+                    <!-- Audio Enhancer -->
+                    <div class="Unavailable_anima">
+                        <div class="platform-card">
+                            <div class="image-wrapper">
+                                <img class="platform-image"
+                                    src="../public/images/audio enhancer.png" alt="...">
+                            </div>
+                            <span class="platform-label">Audio Enhancer</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Enhancer -->
+                    <div class="Unavailable_anima">
+                        <div class="platform-card">
+                            <div class="image-wrapper">
+                                <img class="platform-image"
+                                    src="../public/images/ai enhancer.png" alt="...">
+                            </div>
+                            <span class="platform-label">AI Video Enhancer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .platform-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .platform-image {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+
+        .platform-card:hover .platform-image {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .platform-label {
+            background: rgb(139, 92, 246);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .platform-card:hover .platform-label {
+            transform: scale(1.1);
+            background: rgb(167, 139, 250);
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            background-size: 200% 100%;
+            animation: shine 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .platform-card:hover::before {
+            opacity: 1;
+        }
+    </style>
+
+    <!-- About vitaxion section -->
+    <section id="about">
+        <div class="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+            <!-- Header Section -->
+            <div class="relative p-8 border-b border-white/10">
+                <h2
+                    class="text-5xl font-bold bg-gradient-to-r about_anima from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                    About Vitaxion
+                </h2>
+                <div class="h-1 w-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+
+                </div>
+
+            </div>
+
+            <!-- Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-6 aos-init aos-animate about_anima2" data-aos="fade-right">
+                    <div class="prose prose-lg dark:prose-invert">
+                        <p id="dynamicText" class="text-gray-300 leading-relaxed text-lg">
+                            <span
+                                class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">"ViTaxion"</span>,
+                            is a project dedicated to extracting high-quality audio from video files with efficiency and
+                            precision. It aims to provide users with a seamless way to separate audio tracks for various
+                            purposes, such as music editing, podcast creation, or transcription.
+                        </p>
+
+                        <button id="updateButton"
+                            class="px-4 py-2 mt-2 about_anima bg-purple-500 text-white rounded hover:bg-purple-600 focus:outline-none">
+                            Start Writing
+                        </button>
+
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById('updateButton').addEventListener('click', function() {
+                        const button = this;
+                        const dynamicText = document.getElementById('dynamicText');
+                        const baseText = '<span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">"ViTaxion"</span>, is a project dedicated to extracting high-quality audio from video files with efficiency and precision. It aims to provide users with a seamless way to separate audio tracks for various purposes, such as music editing, podcast creation, or transcription.';
+                        const additionalText = " Vitaxion is a cutting-edge project focused on extracting high-quality audio from video files. Designed to cater to diverse needs such as Audio rename, Audio Download, it offers a seamless way to separate audio tracks. Whether you're a content creator, audio engineer, or casual user, Vitaxion empowers you to isolate and utilize audio effortlessly.";
+                        
+                        if (button.textContent === 'Start Writing') {
+                            // Start typing animation
+                            button.textContent = 'Clear Text';
+                            let index = 0;
+                            
+                            function typeWriter() {
+                                if (index < additionalText.length) {
+                                    dynamicText.innerHTML = baseText + additionalText.substring(0, index + 1);
+                                    index++;
+                                    setTimeout(typeWriter, 50);
+                                }
+                            }
+                            
+                            typeWriter();
+                        } else {
+                            // Clear the additional text
+                            button.textContent = 'Start Writing';
+                            dynamicText.innerHTML = baseText;
+                        }
+                    });
+                </script>
+
+                <!-- Skills Column -->
+                <div class="space-y-8 aos-init aos-animate" data-aos="fade-left">
+                    <!-- Personal Skills -->
+                    <div class="space-y-4">
+                        <!-- <h3 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                Personal Skills
+                            </h3> -->
+                        <div class="grid grid-cols-1 gap-2">
+                            <div class=" rounded-2xl">
+                                <video class="w-full h-full object-cover rounded-2xl about_anima_video" autoplay muted
+                                    loop>
+                                    <source src="../public/images/video enhancer1.mp4" type="video/mp4">
+
+                                </video>
+                                <div
+                                    class="absolute bottom-4 left-4 about_anima bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg max-w-xs">
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full about_anima_youtube bg-blue-100 flex items-center justify-center">
+                                            <a href="https://www.youtube.com/@Christian_Billionaire_Network">
+                                                <svg class="w-10 h-10 fill-red-600 hover:scale-150 transition-transform duration-400 cursor-pointer"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                                    <path
+                                                        d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z" />
+                                            </svg>
+                                        </a>
+                                       
+                                </div>
+                            </div>
+
+                            <!-- Communication -->
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- About vitaxion section -->
+
+    <!-- Ads sections main -->
+    <div id="adBox" class="fixed top-20 right-10 w-80 Ads_anima_text2 cursor-pointer
+             bg-white shadow-lg rounded-lg border border-gray-200 fade-in p-4 z-50">
+        <div class="flex justify-between items-start">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800">Special Offer! (0$)</h2>
+                <p class="text-sm text-gray-600 mt-2">
+                    Get Free for the first 30 days. No charges is required.
+                </p>
+            </div>
+            <button id="closeAd" class="text-gray-500 hover:text-red-700">
+                ✕
+            </button>
+        </div>
+        <div class="mt-4">
+            <img src="../public/images/vitaxion logo.png" alt="vitaxion Ads not show,please wait" 
+                 style="width: 100%; height: auto; max-height: 100%;" class="rounded-md">
+        </div>
+        <!-- Resize Handle -->
+        <div id="resizeHandle" class="resize-handle"></div>
+    </div>
+
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .resize-handle {
+            width: 12px;
+            height: 12px;
+            background: #864708;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            cursor: nwse-resize;
+            border-radius: 50%;
+        }
+
+        #adBox {
+            min-width: 200px;
+            min-height: 200px;
+            resize: both;
+            overflow: hidden;
+        }
+
+        #adBox img {
+            display: block;
+            transition: all 0.2s ease;
+        }
+    </style>
+
+    <script>
+        const adBox = document.getElementById('adBox');
+        const closeAd = document.getElementById('closeAd');
+        const resizeHandle = document.getElementById('resizeHandle');
+        const adImage = adBox.querySelector('img');
+
+        closeAd.addEventListener('click', () => {
+            adBox.style.display = 'none';
+        });
+
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        adBox.addEventListener('mousedown', (e) => {
+            if (e.target === resizeHandle) return;
+            isDragging = true;
+            offsetX = e.clientX - adBox.offsetLeft;
+            offsetY = e.clientY - adBox.offsetTop;
+            adBox.style.transition = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+                const maxX = window.innerWidth - adBox.offsetWidth;
+                const maxY = window.innerHeight - adBox.offsetHeight;
+                adBox.style.left = `${Math.min(Math.max(0, x), maxX)}px`;
+                adBox.style.top = `${Math.min(Math.max(0, y), maxY)}px`;
+                adBox.style.position = 'fixed';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            adBox.style.transition = 'transform 0.2s ease';
+        });
+
+        let isResizing = false;
+        let startWidth = 0;
+        let startHeight = 0;
+        let startX = 0;
+        let startY = 0;
+
+        resizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startWidth = adBox.offsetWidth;
+            startHeight = adBox.offsetHeight;
+            startX = e.clientX;
+            startY = e.clientY;
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isResizing) {
+                const newWidth = startWidth + (e.clientX - startX);
+                const newHeight = startHeight + (e.clientY - startY);
+                
+                // Set minimum size limits
+                const width = Math.max(200, newWidth);
+                const height = Math.max(200, newHeight);
+                
+                adBox.style.width = `${width}px`;
+                adBox.style.height = `${height}px`;
+                
+                // Update image size proportionally
+                const imageWidth = width - 32; // Account for padding
+                adImage.style.width = `${imageWidth}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+        });
+    </script>
+
+    <!-- Floating Ads Boxes Container -->
+    <div class="fixed z-10 flex gap-4">
+        <!-- First Floating Ads Box -->
+        <div class="ads-box1 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg animate-float ads_photizo" 
+             style="left: 20px; top: 100px; min-width: 300px; max-width: 400px; width: auto;">
+            <div class="flex items-center justify-between mb-4 ads_photizo">
+                <h3 class="text-xl font-semibold text-white">Advertisement</h3>
+                <button id="closeAds1" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="adsContent1" class="space-y-4 ads_photizo">
+                <div class="bg-purple-500/20 rounded-lg p-4">
+                    <div class="aspect-video overflow-hidden rounded-lg mb-4">
+                        <img src="../public/images/a.png" 
+                             alt="Advertisement" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-white text-base leading-relaxed">This is Photizo Charity Foundation
+                          a dedicated non profit organization committed to transforming life and uplifting 
+                          burdens on mankind, via our diverse Programs , Events and Outreaches. Founded with 
+                          the vision to bring Hope and Light, we (photized), or represent to underserved population. 
+                    </p>
+                </div>
+                <button id="skipAds1" class="w-full bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors">
+                    Skip Ad in <span id="countdown1">5</span>
+                </button>
+            </div>
+        </div>
+
+     
+    </div>
+
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .ads-box1, .ads-box2 {
+            position: fixed;
+            z-index: 50;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .ads-box1:hover, .ads-box2:hover {
+            transform: scale(1.02);
+        }
+
+        /* Custom scrollbar for the ads boxes */
+        .ads-box1::-webkit-scrollbar,
+        .ads-box2::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .ads-box1::-webkit-scrollbar-track,
+        .ads-box2::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .ads-box1::-webkit-scrollbar-thumb,
+        .ads-box2::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .ads-box1::-webkit-scrollbar-thumb:hover,
+        .ads-box2::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+
+    <script>
+        // First Ads Box Script
+        (function() {
+            const closeAdsBtn1 = document.getElementById('closeAds1');
+            const skipAdsBtn1 = document.getElementById('skipAds1');
+            const countdownSpan1 = document.getElementById('countdown1');
+            const adsBox1 = document.querySelector('.ads-box1');
+            
+            let timeLeft1 = 5;
+            let countdownInterval1;
+
+            function updateCountdown1() {
+                countdownSpan1.textContent = timeLeft1;
+                if (timeLeft1 <= 0) {
+                    clearInterval(countdownInterval1);
+                    skipAdsBtn1.innerHTML = 'Skip Ad';
+                    skipAdsBtn1.disabled = false;
+                    skipAdsBtn1.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                timeLeft1--;
+            }
+
+            countdownInterval1 = setInterval(updateCountdown1, 1000);
+            skipAdsBtn1.disabled = true;
+            skipAdsBtn1.classList.add('opacity-50', 'cursor-not-allowed');
+
+            skipAdsBtn1.addEventListener('click', () => {
+                if (timeLeft1 <= 0) {
+                    adsBox1.style.display = 'none';
+                }
+            });
+
+            closeAdsBtn1.addEventListener('click', () => {
+                adsBox1.style.display = 'none';
+                clearInterval(countdownInterval1);
+            });
+        })();
+
+        // Second Ads Box Script
+        (function() {
+            const closeAdsBtn2 = document.getElementById('closeAds2');
+            const skipAdsBtn2 = document.getElementById('skipAds2');
+            const countdownSpan2 = document.getElementById('countdown2');
+            const adsBox2 = document.querySelector('.ads-box2');
+            
+            let timeLeft2 = 5;
+            let countdownInterval2;
+
+            function updateCountdown2() {
+                countdownSpan2.textContent = timeLeft2;
+                if (timeLeft2 <= 0) {
+                    clearInterval(countdownInterval2);
+                    skipAdsBtn2.innerHTML = 'Skip Ad';
+                    skipAdsBtn2.disabled = false;
+                    skipAdsBtn2.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                timeLeft2--;
+            }
+
+            countdownInterval2 = setInterval(updateCountdown2, 1000);
+            skipAdsBtn2.disabled = true;
+            skipAdsBtn2.classList.add('opacity-50', 'cursor-not-allowed');
+
+            skipAdsBtn2.addEventListener('click', () => {
+                if (timeLeft2 <= 0) {
+                    adsBox2.style.display = 'none';
+                }
+            });
+
+            closeAdsBtn2.addEventListener('click', () => {
+                adsBox2.style.display = 'none';
+                clearInterval(countdownInterval2);
+            });
+        })();
+    </script>
+
+    </div>
+
+    <!-- Footer vitaxion section -->
+    <footer class="bg-black/25 text-white py-9 mt-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About Section -->
+                <div class="footer_anima">
+                    <h3 class="text-lg font-semibold mb-4">Appericiation Note</h3>
+                    <p class="text-gray-400">I dedicate this Project to <span class="text-orange-500">God Almight</span>
+                        and to my wonderfull mummy and daddy <span class="text-orange-500">Mr And Mrs Yusuf</span> ,
+                        thank you so much, God bless you abundantly</p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 footer_anima">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors footer_anima_text">Home</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors footer_anima_text">Feature</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors footer_anima_text">Uploads</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors footer_anima_text">About</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Social Media -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 footer_anima_text2">Contact Us</h3>
+                    <p class="text-gray-400 footer_anima_text2">Email: microsoftinnotech@gmail.com</p>
+                    <p class="text-gray-400 footer_anima_text2">Phone: (+234) 8065-699-704</p>
+                    <div class="flex space-x-6 mt-4 footer_anima_text">
+                        <a href="https://www.x.com/innotechglobal" target="_blank"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm297.1 84L257.3 234.6 379.4 396H283.8L209 298.1 123.3 396H75.8l111-126.9L69.7 116h98l67.7 89.5L313.6 116h47.5zM323.3 367.6L153.4 142.9H125.1L296.9 367.6h26.3z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.github.com/vincobond"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 4.41 2.87 8.15 6.84 9.49.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 012.5-.34c.85 0 1.7.11 2.5.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A9.96 9.96 0 0022 12c0-5.5-4.46-9.96-9.96-9.96z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/2348065699704?text=This is Vitaxion,Video to Audio Extrator %20I%20would%20like%20to%20inquire%20about%20your%20services"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                            </svg>
+                        </a>
+
+                        <a href="https://www.instagram.com/vin_cotech"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.tiktok.com/vincobondverify"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z" />
+                            </svg>
+                        </a>
+                        <!-- <a href="https://www.linkedin.com/in/Innocent(innotech)Obiorah" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+                    </a> -->
+                        <a href="https://www.facebook.com/vinco bond obiorah"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6 fill-gray-400 hover:fill-white transition-colors"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z" />
+                            </svg>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="footer_anima right ml-10  cursor-pointer">
+                    <a href="#home">
+                        <img class="w-40 h-40 " src="../public/images/transparent vitaxion logo.png" alt="">
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="mt-8 text-center text-gray-500 footer_anima">
+                <p>© 2025 Your Website. All Glory to God</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer vitaxion section -->
+
+    <!-- scroll Reavel -->
+    <script src="../public/javascripts/scrollreveal.min.js"></script>
+    <!-- scroll Reavel -->
+
+    <!-- main custum js -->
+    <script src="../public/javascripts/main.js"></script>
+    <!-- main custum js -->
+
+   
+</body>
+
+</html>
